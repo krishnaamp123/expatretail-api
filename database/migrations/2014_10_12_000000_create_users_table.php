@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('address', 100);
             $table->timestamps();
 
-            $table->foreign('id_group')->references('id')->on('company');
+            $table->foreign('id_group')->references('id')->on('companies');
         });
     }
 

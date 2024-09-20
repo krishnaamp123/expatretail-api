@@ -19,10 +19,26 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'id_group',
         'email',
         'password',
+        'customer_name',
+        'pic_name',
+        'pic_phone',
+        'address',
     ];
+
+    // /**
+    //  * Get the group that belongs to user
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    //  */
+
+    //  public function group(): BelongsTo
+    //  {
+    //     return $this->belongsTo(Company::class, 'id_group', 'id')
+    //  }
+
 
     /**
      * The attributes that should be hidden for serialization.

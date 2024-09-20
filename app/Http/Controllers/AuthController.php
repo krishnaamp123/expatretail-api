@@ -23,9 +23,13 @@ class AuthController extends Controller
     public function register()
     {
         $validator = Validator::make(request()->all(),[
-            'name' =>'required',
+            'id_group' => 'required',
             'email' =>'required|email|unique:users',
-            'password' => 'required'
+            'password' => 'required',
+            'customer_name' =>'required',
+            'pic_name' => 'required',
+            'pic_phone' => 'required',
+            'address' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -33,9 +37,13 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'name' => request('name'),
+            'id_group' => request('id_group'),
             'email' => request('email'),
-            'password' => Hash::make(request('password'))
+            'password' => Hash::make(request('password')),
+            'customer_name' => request('customer_name'),
+            'pic_name' => request('pic_name'),
+            'pic_phone' => request('pic_phone'),
+            'address' => request('address'),
         ]);
 
         if ($user){
