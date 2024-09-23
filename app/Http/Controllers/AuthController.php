@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +53,45 @@ class AuthController extends Controller
             return response()->json(['message' => 'Something went wrong']);
         }
     }
+
+    public function index()
+    {
+        $user = User::all();
+        // return response()->json(['data' => $user]);
+        return UserResource::collection($user);
+    }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        // return response()->json(['data' => $user]);
+        return UserResource::collection($user);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'id_group' => 'required',
+            'email' =>'required|email|unique:users',
+            'password' => 'required',
+            'customer_name' =>'required',
+            'pic_name' => 'required',
+            'pic_phone' => 'required',
+            'address' => 'required',
+        ]);
+
+        $user = User::findorFail($id);
+        $user->update($request->all());
+        return response()->json(['data' => $user]);
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(['data' => $user]);
+    }
+
     /**
      * Get a JWT via given credentials.
      *

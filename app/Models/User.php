@@ -28,6 +28,11 @@ class User extends Authenticatable implements JWTSubject
         'address',
     ];
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'id_group');
+    }
+
     // /**
     //  * Get the group that belongs to user
     //  *
