@@ -10,8 +10,8 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $order = Order::all();
-        // return response()->json(['data' => $order]);
+        $customerId = auth()->id();
+        $order = Order::where('id_customer', $customerId)->get();
         return OrderResource::collection($order);
     }
 
@@ -24,8 +24,8 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_customer_product' => 'required',
-            'qty' => 'required',
+            'id_customer' => 'required',
+            'id_cart' => 'required',
             'total_price' => 'required',
         ]);
 
@@ -36,8 +36,8 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'id_customer_product' => 'required',
-            'qty' => 'required',
+            'id_customer' => 'required',
+            'id_cart' => 'required',
             'total_price' => 'required',
         ]);
 

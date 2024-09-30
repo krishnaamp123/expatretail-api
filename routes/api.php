@@ -9,6 +9,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ComplaintController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,11 +62,33 @@ Route::middleware('auth:api')->group(function () {
     Route::post('customerproduct', [CustomerProductController::class,'store']);
     Route::patch('customerproduct/{id}', [CustomerProductController::class,'update']);
     Route::delete('customerproduct/{id}', [CustomerProductController::class,'destroy']);
+
+    // CART
+    Route::get('cart', [CartController::class,'index']);
+    Route::get('cart/{id}', [CartController::class,'show']);
+    Route::post('cart', [CartController::class,'store']);
+    Route::patch('cart/{id}', [CartController::class,'update']);
+    Route::delete('cart/{id}', [CartController::class,'destroy']);
+
+    // COMPLAINT
+    Route::get('complaint', [ComplaintController::class,'index']);
+    Route::get('complaint/{id}', [ComplaintController::class,'show']);
+    Route::post('complaint', [ComplaintController::class,'store']);
+    Route::patch('complaint/{id}', [ComplaintController::class,'update']);
+    Route::delete('complaint/{id}', [ComplaintController::class,'destroy']);
+
+    //ORDER
+    Route::get('order', [OrderController::class,'index']);
+    Route::get('order/{id}', [OrderController::class,'show']);
+    Route::post('order', [OrderController::class,'store']);
+    Route::patch('order/{id}', [OrderController::class,'update']);
+    Route::delete('order/{id}', [OrderController::class,'destroy']);
 });
 
-//ORDER
-Route::get('order', [OrderController::class,'index']);
-Route::get('order/{id}', [OrderController::class,'show']);
-Route::post('order', [OrderController::class,'store']);
-Route::patch('order/{id}', [OrderController::class,'update']);
-Route::delete('order/{id}', [OrderController::class,'destroy']);
+Route::get('/storage/image/{filename}', function ($filename) {
+    $path = storage_path('app/image/' . $filename);
+    if (!File::exists($path)) {
+        abort(404);
+    }
+    return response()->file($path);
+});
