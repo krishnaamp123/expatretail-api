@@ -48,6 +48,6 @@ class PackagingController extends Controller
     {
         $packaging = Packaging::findOrFail($id);
         $packaging->delete();
-        return new PackagingResource($packaging);
+        return response()->json(['message' => 'Packaging deleted successfully.'], 200);
     }
 }

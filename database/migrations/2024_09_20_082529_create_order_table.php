@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('id_customer');
-            $table->unsignedBigInteger('id_cart');
             $table->bigInteger('total_price')->unsigned();
+            $table->enum('status', ['unpaid', 'paid'])->default('unpaid');
 
             $table->foreign('id_customer')->references('id')->on('users');
-            $table->foreign('id_cart')->references('id')->on('carts');
         });
     }
 

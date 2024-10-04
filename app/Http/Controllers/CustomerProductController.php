@@ -52,6 +52,6 @@ class CustomerProductController extends Controller
     {
         $customerproduct = CustomerProduct::findOrFail($id);
         $customerproduct->delete();
-        return new CustomerProductResource($customerproduct);
+        return response()->json(['message' => 'CustomerProduct deleted successfully.'], 200);
     }
 }

@@ -61,7 +61,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->delete();
-        return new ProductResource($product);
+        return response()->json(['message' => 'Product deleted successfully.'], 200);
     }
 
     function generateRandomString($length = 30) {

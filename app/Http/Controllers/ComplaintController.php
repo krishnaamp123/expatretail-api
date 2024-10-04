@@ -63,7 +63,7 @@ class ComplaintController extends Controller
     {
         $complaint = Complaint::findOrFail($id);
         $complaint->delete();
-        return new ComplaintResource($complaint);
+        return response()->json(['message' => 'Complaint deleted successfully.'], 200);
     }
 
     function generateRandomString($length = 30) {

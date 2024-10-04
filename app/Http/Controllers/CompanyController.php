@@ -46,6 +46,6 @@ class CompanyController extends Controller
     {
         $company = Company::findOrFail($id);
         $company->delete();
-        return new CompanyResource($company);
+        return response()->json(['message' => 'Company deleted successfully.'], 200);
     }
 }

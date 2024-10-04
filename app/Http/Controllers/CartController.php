@@ -50,6 +50,6 @@ class CartController extends Controller
     {
         $cart = Cart::findOrFail($id);
         $cart->delete();
-        return new CartResource($cart);
+        return response()->json(['message' => 'Cart deleted successfully.'], 200);
     }
 }
