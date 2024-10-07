@@ -11,9 +11,9 @@ class DetailOrder extends Model
     protected $fillable = [
         'id_order',
         'id_cart',
+        'id_customer_product',
         'qty',
         'price',
-        'total_price'
     ];
 
     public function order()
@@ -24,5 +24,10 @@ class DetailOrder extends Model
     public function cart()
     {
         return $this->belongsTo(Cart::class, 'id_cart');
+    }
+
+    public function customerProduct()
+    {
+        return $this->belongsTo(CustomerProduct::class, 'id_customer_product');
     }
 }

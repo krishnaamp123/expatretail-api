@@ -74,7 +74,7 @@ Route::middleware(["admin"])->group(function (){
     Route::delete('customerproduct/{id}', [CustomerProductController::class,'destroy']);
 
 });
-Route::middleware(['admin','retail'])->group(function() {
+Route::middleware(['retail'])->group(function() {
     // CART
     Route::get('cart', [CartController::class,'index']);
     Route::get('cart/{id}', [CartController::class,'show']);

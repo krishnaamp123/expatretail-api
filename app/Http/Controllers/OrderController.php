@@ -29,34 +29,13 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
 
-    // public function store(Request $request)
-    // {
-    //     // dd ($request);
-    //     $validated = $request->validate([
-    //         'id_customer' => 'required',
-    //         'details' => 'required|array',
-    //         // 'details.*' => 'json',
-    //         'total_price' => 'required',
-    //         // 'carts.*' => 'exists:carts, id',
-    //     ]);
-    //     $order = Order::create($request->all());
-    //     $details = array_map(function($value) use ($request, $order){
-    //         // $cart = Cart::find($value);
-    //         // $value = json_decode($value);
-    //         // dd (json_decode($value));
-    //         return ['id_order'=>$order->id, 'id_cart'=>$value['id'], 'qty'=>$value['qty'], 'price'=>$value['price']];
-    //     }, $request->details);
-    //     DetailOrder::insert($details);
-    //     return new OrderResource($order);
-    // }
-
     public function store(Request $request)
     {
         // Validasi input
         $validated = $request->validate([
             'id_customer' => 'required|exists:users,id',
             'details' => 'required|array',
-            'details.*.id' => 'required|exists:carts,id',  // Memastikan setiap detail memiliki 'id_cart' yang valid
+            'details.*.id' => 'required|exists:carts,id',
             'details.*.qty' => 'required|integer',
             // 'details.*.price' => 'required|integer',
             // 'total_price' => 'required|integer',
