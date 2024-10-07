@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Cart;
 use App\Models\DetailOrder;
 use Illuminate\Http\Request;
 use App\Http\Resources\OrderResource;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -56,31 +58,49 @@ class OrderController extends Controller
             'details' => 'required|array',
             'details.*.id' => 'required|exists:carts,id',  // Memastikan setiap detail memiliki 'id_cart' yang valid
             'details.*.qty' => 'required|integer',
-            'details.*.price' => 'required|numeric',
-            'total_price' => 'required|numeric',
+            // 'details.*.price' => 'required|integer',
+            // 'total_price' => 'required|integer',
         ]);
 
-        // Membuat order
-        $order = Order::create([
-            'id_customer' => $request->id_customer,
-            'total_price' => $request->total_price,
-        ]);
+        DB::beginTransaction();
 
-        // Memproses details array dan memasukkannya ke tabel DetailOrder
-        $details = array_map(function ($value) use ($order) {
-            return [
-                'id_order' => $order->id,
-                'id_cart' => $value['id'],
-                'qty' => $value['qty'],
-                'price' => $value['price']
-            ];
-        }, $request->details);
+        try {
+            // Membuat order
+            $order = Order::create([
+                'id_customer' => $request->id_customer,
+                'total_price' => 0,
+            ]);
 
-        // Simpan ke tabel DetailOrder
-        DetailOrder::insert($details);
+            // Memproses details array dan memasukkannya ke tabel DetailOrder
+            $deleteds = collect([]);
+            $details = array_map(function ($value) use ($order,$deleteds) {
+                $cart = Cart::find($value['id']);
+                $price = $cart->customerProduct->price;
+                $qty = $value['qty'];
+                $total = $price * $qty;
+                $deleteds->push($cart->id);
+                $order->total_price += $total;
+                return [
+                    'id_order' => $order->id,
+                    'id_customer_product' => $cart->id_customer_product,
+                    'qty' => $qty,
+                    'price' => $total,
+                ];
+            }, $request->details);
+            // Simpan ke tabel DetailOrder
+            DetailOrder::insert($details);
+            // $order->update(["total_price" => $totalPrice]);
+            $order->save();
+            Cart::destroy($deleteds);
+            DB::commit();
+            // Mengembalikan respons
+            return new OrderResource($order);
+        }catch(\Throwable $e) {
+            DB::rollback();
+            return response()
+                ->json(['error' => $e->getMessage()] , 500);
+        }
 
-        // Mengembalikan respons
-        return new OrderResource($order);
     }
 
     public function update(Request $request, $id)

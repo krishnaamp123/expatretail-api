@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('id_order');
-            $table->unsignedBigInteger("id_cart");
+            $table->unsignedBigInteger("id_customer_product");
             $table->unsignedBigInteger('qty')->default(0);
             $table->unsignedBigInteger('price')->default(0);
 
             $table->foreign('id_order')->references('id')->on('orders');
-            $table->foreign('id_cart')->references('id')->on('carts');
+            $table->foreign('id_customer_product')->references('id')->on('customer_products');
         });
     }
 

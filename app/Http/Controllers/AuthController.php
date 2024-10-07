@@ -31,6 +31,7 @@ class AuthController extends Controller
             'pic_name' => 'required',
             'pic_phone' => 'required',
             'address' => 'required',
+            'role' => "required|in:admin,retail,supermarket"
         ]);
 
         if ($validator->fails()) {
@@ -45,6 +46,7 @@ class AuthController extends Controller
             'pic_name' => request('pic_name'),
             'pic_phone' => request('pic_phone'),
             'address' => request('address'),
+            'role' => request('role'),
         ]);
 
         if ($user){

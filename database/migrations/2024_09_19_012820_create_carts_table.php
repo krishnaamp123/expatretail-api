@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_customer');
             $table->unsignedBigInteger('id_customer_product');
             $table->bigInteger('qty')->unsigned();
+            $table->boolean('is_checkout')->default(false);
 
             $table->foreign('id_customer')->references('id')->on('users');
             $table->foreign('id_customer_product')->references('id')->on('customer_products');

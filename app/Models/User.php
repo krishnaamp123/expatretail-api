@@ -26,6 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'pic_name',
         'pic_phone',
         'address',
+        'role',
     ];
 
     public function company()

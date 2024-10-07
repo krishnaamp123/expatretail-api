@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('pic_name', 100);
             $table->string('pic_phone', 15);
             $table->string('address', 100);
+            $table->enum('role',['admin','retail','supermarket']);
             $table->timestamps();
 
             $table->foreign('id_group')->references('id')->on('companies');
