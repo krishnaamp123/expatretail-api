@@ -98,9 +98,7 @@ Route::middleware(['retail'])->group(function() {
 });
 
 
-// Route::middleware('auth:api')->group(function () {
-
-// });
+// Route::middleware('auth:api')->group(function () { });
 
 Route::get('/storage/image/{filename}', function ($filename) {
     $path = storage_path('app/image/' . $filename);

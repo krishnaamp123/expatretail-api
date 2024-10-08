@@ -66,7 +66,6 @@ class AuthController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        // return response()->json(['data' => $user]);
         return new UserResource($user);
     }
 
@@ -109,6 +108,33 @@ class AuthController extends Controller
 
         return $this->respondWithToken($token);
     }
+
+    // public function login(Request $request)
+    // {
+    //     // Validate the incoming request data
+    //     $validator = Validator::make($request->all(), [
+    //         'email' => 'required|email',
+    //         'password' => 'required',
+    //     ]);
+
+    //     // If validation fails, redirect back with errors
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator)->withInput();
+    //     }
+
+    //     // Get the email and password from the request
+    //     $credentials = $request->only('email', 'password');
+
+    //     // Attempt to log in using the provided credentials
+    //     if (!auth()->attempt($credentials)) {
+    //         // If login fails, redirect back with an error message
+    //         return redirect()->back()->with('error', 'Unauthorized: Invalid email or password')->withInput();
+    //     }
+
+    //     // If login is successful, redirect to the desired page
+    //     return redirect()->route('dashboard')->with('success', 'Login successful!');
+    // }
+
 
     /**
      * Get the authenticated User.

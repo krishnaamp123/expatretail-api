@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AdminProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome');
+});
+Route::get('/login',[AdminAuthController::class,'getLogin'])->name('getLogin');
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+})->name('dashboard');
+Route::get('/product',[AdminProductController::class,'getProduct'])->name('getProduct');
