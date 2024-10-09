@@ -60,6 +60,18 @@
             </div>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{route('getCompany')}}">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Company</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('getPackaging')}}">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Packaging</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('getProduct')}}">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Product</span></a>

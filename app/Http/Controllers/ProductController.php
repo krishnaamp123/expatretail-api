@@ -36,7 +36,7 @@ class ProductController extends Controller
             $extension = $request->file->extension();
             $image = $filename.'.'.$extension;
 
-            Storage::putFileAs('image', $request->file, $image);
+            Storage::putFileAs('public/image', $request->file, $image);
         }
 
         $request['image'] = $image;
