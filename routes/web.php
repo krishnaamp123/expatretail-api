@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminPackagingController;
+use App\Http\Controllers\Admin\AdminCompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,14 @@ Route::post('/company/create', [AdminCompanyController::class, 'storeCompany'])-
 Route::get('/company/update/{id}', [AdminCompanyController::class, 'editCompany'])->name('editCompany');
 Route::put('/company/update/{id}', [AdminCompanyController::class, 'updateCompany'])->name('updateCompany');
 Route::delete('/company/destroy/{id}', [AdminCompanyController::class, 'destroyCompany'])->name('destroyCompany');
+
+//USER
+Route::get('/user', [AdminAuthController::class, 'getUser'])->name('getUser');
+Route::get('/user/create', [AdminAuthController::class, 'addUser'])->name('addUser');
+Route::post('/user/create', [AdminAuthController::class, 'storeUser'])->name('storeUser');
+Route::get('/user/update/{id}', [AdminAuthController::class, 'editUser'])->name('editUser');
+Route::put('/user/update/{id}', [AdminAuthController::class, 'updateUser'])->name('updateUser');
+Route::delete('/user/destroy/{id}', [AdminAuthController::class, 'destroyUser'])->name('destroyUser');
 
 //PACKAGING
 Route::get('/packaging', [AdminPackagingController::class, 'getPackaging'])->name('getPackaging');

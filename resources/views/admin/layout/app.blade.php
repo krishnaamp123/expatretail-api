@@ -23,6 +23,78 @@
     <!-- Custom styles for this page -->
     <link href="{{asset('admin_assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 
+    <!-- Include Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Include jQuery (required for Select2) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Include Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <style>
+        .select2-container .select2-selection--single {
+            height: 40px; /* Mengubah tinggi dari select */
+            padding: 8px; /* Mengatur padding agar lebih proporsional */
+            font-size: 16px; /* Ukuran font yang lebih besar */
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 24px; /* Mengatur tinggi baris agar seimbang dengan ukuran input */
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px; /* Mengubah tinggi dari panah dropdown */
+        }
+
+        .sidebar .nav-item.active .nav-link {
+            background-color: #000; /* Warna hijau untuk latar belakang */
+            color: #72A28A; /* Warna teks putih */
+        }
+
+        .sidebar .nav-item.active .nav-link i {
+            color: #72A28A; /* Warna ikon putih saat aktif */
+        }
+
+        .sidebar .nav-item.active .nav-link:hover {
+            background-color: #191919; /* Warna hijau gelap saat hover */
+            color: white; /* Warna teks putih saat hover */
+        }
+
+        .sidebar .nav-item .nav-link:hover i {
+            color: #fff; /* Warna ikon putih saat hover */
+        }
+
+        /* Mengubah warna background dan teks pada pagination */
+        .table-responsive .pagination .page-item .page-link {
+            background-color: #fff; /* Warna latar belakang pagination */
+            color: #8f8f8f; /* Warna teks pagination */
+        }
+
+        .table-responsive .pagination .page-item .page-link:hover {
+            background-color: #e7e7e7; /* Warna latar belakang saat hover */
+            color: #72A28A; /* Warna teks saat hover */
+        }
+
+        /* Mengubah warna untuk pagination aktif */
+        .table-responsive .pagination .page-item.active .page-link {
+            background-color: #72A28A; /* Warna latar belakang untuk halaman aktif */
+            color: white; /* Warna teks halaman aktif */
+            border-color: #72A28A; /* Warna border halaman aktif */
+        }
+
+
+        /* Hover pada dropdown */
+        .table-responsive .dataTables_length select:hover {
+            background-color: ; /* Warna latar belakang dropdown saat hover */
+            color: #72A28A;
+        }
+
+    </style>
+
+
+
+
 </head>
 
 <body id="page-top">
@@ -31,24 +103,27 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #000; color: white;" id="accordionSidebar">
+
+            <hr class="my-2">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <div class="sidebar-brand-icon rotate-n-10">
+                    <img src="{{ asset('storage/image/expatlogo.png') }}" alt="Brand Icon" style="">
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                {{-- <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div> --}}
             </a>
-
+            <hr class="my-2">
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('dashboard')}}">
+            <li class="nav-item {{ Request::routeIs('dashboard') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Dashboard</span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -59,22 +134,32 @@
                 Master
             </div>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('getCompany')}}">
+            <li class="nav-item {{ Request::routeIs('getCompany') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('getCompany') }}">
                     <i class="fas fa-fw fa-users"></i>
-                    <span>Company</span></a>
+                    <span>Company</span>
+                </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('getPackaging')}}">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Packaging</span></a>
+            <li class="nav-item {{ Request::routeIs('getUser') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('getUser') }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>User</span>
+                </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('getProduct')}}">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Product</span></a>
+            <li class="nav-item {{ Request::routeIs('getPackaging') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('getPackaging') }}">
+                    <i class="fas fa-fw fa-box"></i>
+                    <span>Packaging</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ Request::routeIs('getProduct') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('getProduct') }}">
+                    <i class="fas fa-fw fa-shopping-bag"></i>
+                    <span>Product</span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -95,7 +180,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background-color: #fff; color: black;" >
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <form class="form-inline">
@@ -113,12 +198,12 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    src="{{ asset('storage/image/adminicon.png') }}">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            {{-- <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -137,7 +222,7 @@
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
-                            </div>
+                            </div> --}}
                         </li>
 
                     </ul>
@@ -158,7 +243,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Expat. Roasters 2024</span>
                     </div>
                 </div>
             </footer>
@@ -196,7 +281,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('admin_assets/vendor/jquery/jquery.min.js')}}"></script>
+    {{-- <script src="{{asset('admin_assets/vendor/jquery/jquery.min.js')}}"></script> --}}
     <script src="{{asset('admin_assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
@@ -211,6 +296,15 @@
 
     <!-- Page level custom scripts -->
     <script src="{{asset('admin_assets/js/demo/datatables-demo.js')}}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Select Company",
+                allowClear: true
+            });
+        });
+    </script>
 
 </body>
 
